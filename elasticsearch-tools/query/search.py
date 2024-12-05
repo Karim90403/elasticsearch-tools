@@ -7,6 +7,7 @@ from query.base import ElasticBaseQuery
 class ElasticQueryString(ElasticBaseQuery):
     field: Optional[str]
     value: Optional[str]
+    query_type: str = "query_string"
 
     def __init__(self, field: Optional[str], value: Optional[str]):
         self.field = field
@@ -19,6 +20,7 @@ class ElasticQueryString(ElasticBaseQuery):
 class ElasticTermQuery(ElasticBaseQuery):
     field: str
     value: str
+    query_type: str = "term"
 
     def __init__(self, field: str, value: str):
         self.field = field
@@ -30,6 +32,7 @@ class ElasticTermQuery(ElasticBaseQuery):
 
 class ElasticExistsQuery(ElasticBaseQuery):
     field: str
+    query_type: str = "exists"
 
     def __init__(self, field: str):
         self.field = field
@@ -41,6 +44,7 @@ class ElasticExistsQuery(ElasticBaseQuery):
 class ElasticFullMatchQuery(ElasticBaseQuery):
     field: str
     value: str
+    query_type: str = "match_phrase"
 
     def __init__(self, field: str, value: str):
         self.field = field
@@ -54,6 +58,7 @@ class ElasticRangeQuery(ElasticBaseQuery):
     field: str
     value_from: int
     value_to: int
+    query_type: str = "range"
 
     def __init__(self, field: str, value_from: int, value_to: int):
         self.field = field
@@ -68,6 +73,7 @@ class ElasticGeoPointRangeQuery(ElasticBaseQuery):
     field: str
     value_from: str
     value_to: str
+    query_type: str = "geo_point_range"
 
     def __init__(self, field: str, value_from: str, value_to: str):
         self.field = field
@@ -95,6 +101,7 @@ class ElasticGeoPointRangeQuery(ElasticBaseQuery):
 class ElasticGeoPointQuery(ElasticBaseQuery):
     field: str
     value: str
+    query_type: str = "geo_point"
 
     def __init__(self, field: str, value: str):
         self.field = field
@@ -107,6 +114,7 @@ class ElasticGeoPointQuery(ElasticBaseQuery):
 class ElasticNestedQuery(ElasticBaseQuery):
     query: ElasticBaseQuery
     nested_path: Optional[str]
+    query_type: str = "nested"
 
     def _path(self):
         if self.nested_path:

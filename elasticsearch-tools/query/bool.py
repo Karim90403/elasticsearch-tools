@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List
 
 from query.base import ElasticBaseQuery
 
 
 class ElasticBoolQuery(ElasticBaseQuery):
     queries: List[ElasticBaseQuery]
-    query_type: Optional[str]
+    query_type = "bool_base"
 
     def __init__(self, queries: List[ElasticBaseQuery]):
         self.queries = queries or []

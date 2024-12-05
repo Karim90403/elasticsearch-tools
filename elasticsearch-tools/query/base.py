@@ -2,6 +2,8 @@ from __future__ import annotations
 
 
 class ElasticBaseQuery(object):
+    query_type: str
+
     def get_query(self) -> dict:
         return {}
 
