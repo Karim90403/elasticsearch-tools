@@ -1,11 +1,11 @@
 import contextlib
 from typing import Optional
 
-from connection.base.abc_session_manager import BaseSessionManager
-from elasticsearch import AsyncElasticsearch
+from .base.abc_session_manager import BaseSessionManager
+from elasticsearch import Elasticsearch
 
 
-class ElasticAsyncSessionManager(BaseSessionManager):
+class ElasticSessionManager(BaseSessionManager):
     def __init__(self) -> None:
         self._sessionmaker = None
 
@@ -41,7 +41,7 @@ class ElasticAsyncSessionManager(BaseSessionManager):
             if url.startswith("https://"):
                 elasticsearch_kwargs["verify_certs"] = False
 
-            client: AsyncElasticsearch = AsyncElasticsearch(**kwargs, **elasticsearch_kwargs)
+            client: Elasticsearch = Elasticsearch(**kwargs, **elasticsearch_kwargs)
 
             return client
 
@@ -55,7 +55,7 @@ class ElasticAsyncSessionManager(BaseSessionManager):
         """
         self._sessionmaker = None
 
-    def session(self) -> AsyncElasticsearch:
+    def session(self) -> Elasticsearch:
         """
         Get session of elasticsearch database
         Returns:
@@ -66,7 +66,7 @@ class ElasticAsyncSessionManager(BaseSessionManager):
         return self._sessionmaker()
 
     @contextlib.asynccontextmanager
-    async def asession(self) -> AsyncElasticsearch:
+    async def asession(self) -> Elasticsearch:
         """
         Get session of elasticsearch database
         Returns:
@@ -78,4 +78,4 @@ class ElasticAsyncSessionManager(BaseSessionManager):
             yield session
 
 
-elastic_async_db_manager = ElasticAsyncSessionManager()
+elastic_db_manager = ElasticSessionManager()

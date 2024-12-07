@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List
 
-from query.base import ElasticBaseQuery
+from .base import ElasticBaseQuery
 
 
 class ElasticBoolQuery(ElasticBaseQuery):
@@ -25,6 +25,9 @@ class ElasticBoolQuery(ElasticBaseQuery):
         elif isinstance(self, ElasticBoolShould):
             return ElasticBoolShould(queries=self.queries + [other])
         return ElasticBoolShould(queries=[self, other])
+
+    def __getitem__(self, items):
+        return self.queries[items]
 
     def get_query(self):
         return {"bool": {self.query_type: [q.get_query() for q in self.queries]}}

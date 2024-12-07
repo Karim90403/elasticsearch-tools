@@ -1,8 +1,8 @@
 from typing import Optional
 
-from .base import ElasticBaseQuery
 from .bool import ElasticBoolMust, ElasticBoolMustNot, ElasticBoolShould, ElasticBoolQuery
-from .search import ElasticQueryString, ElasticTermQuery, ElasticNestedQuery, ElasticExistsQuery, ElasticRangeQuery, ElasticGeoPointQuery, ElasticGeoPointRangeQuery, ElasticFullMatchQuery
+from .base import ElasticBaseQuery
+from .search import ElasticSearchQuery, ElasticQueryString, ElasticTermQuery, ElasticNestedQuery, ElasticExistsQuery, ElasticRangeQuery, ElasticGeoPointQuery, ElasticGeoPointRangeQuery, ElasticFullMatchQuery, ElasticMatchQuery, ElasticFuzzyQuery
 
 bool_queries = dict()
 
@@ -11,7 +11,7 @@ for bool_query in ElasticBoolQuery.__subclasses__():
 
 search_queries = dict()
 
-for search_query in ElasticBaseQuery.__subclasses__():
+for search_query in ElasticSearchQuery.__subclasses__():
     search_queries[search_query.query_type] = search_query
 
 

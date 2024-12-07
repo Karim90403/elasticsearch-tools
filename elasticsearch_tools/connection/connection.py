@@ -1,21 +1,21 @@
 from typing import Optional
 
-from connection.async_client.async_session_manager import elastic_async_db_manager
-from elasticsearch import AsyncElasticsearch
+from .sync_session_manager import elastic_db_manager
+from elasticsearch import Elasticsearch
 from functools import lru_cache
 
 
 @lru_cache(typed=True, maxsize=None)
-async def get_async_elastic_client_generator() -> AsyncElasticsearch:
+async def get_elastic_client_generator() -> Elasticsearch:
     """
     Generator may be used in fastapi Depends, and inited in lifespan
     """
-    async with elastic_async_db_manager.session() as session:
+    async with elastic_db_manager.session() as session:
         return session
 
 
 @lru_cache(typed=True, maxsize=None)
-def get_async_elastic_client(url: str, login: Optional[str] = None, password: Optional[str] = None, **kwargs) -> AsyncElasticsearch:
+def get_elastic_client(url: str, login: Optional[str] = None, password: Optional[str] = None, **kwargs) -> Elasticsearch:
     """
     For sync class initializing
     Args:
@@ -27,5 +27,5 @@ def get_async_elastic_client(url: str, login: Optional[str] = None, password: Op
     Returns:
 
     """
-    elastic_async_db_manager.init(url, login, password, **kwargs)
-    return elastic_async_db_manager.session()
+    elastic_db_manager.init(url, login, password, **kwargs)
+    return elastic_db_manager.session()
