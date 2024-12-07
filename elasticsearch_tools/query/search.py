@@ -1,4 +1,5 @@
 import os
+import re
 from typing import Optional
 
 from .base import ElasticBaseQuery
@@ -6,6 +7,18 @@ from .bool import ElasticBoolMust, ElasticBoolShould
 
 
 class ElasticSearchQuery(ElasticBaseQuery):
+    field: Optional[str]
+    validate_fields: bool = True
+
+    def __init__(self, field: Optional[str] = None):
+        if field and self.validate_fields and os.getenv("FIELD_VALIDATOR"):
+            pattern = re.compile(r"^[0-9A-Za-z._]+$")
+            if not re.fullmatch(pattern, field):
+                raise ValueError("Invalid value for field")
+        self.field = field
+
+
+
     def __and__(self, other: ElasticBaseQuery):
         return ElasticBoolMust(queries=[self, other])
 
@@ -19,7 +32,7 @@ class ElasticQueryString(ElasticSearchQuery):
     query_type: str = "query_string"
 
     def __init__(self, field: Optional[str] = None, value: Optional[str] = None):
-        self.field = field
+        super().__init__(field)
         self.value = value
 
     def get_query(self) -> dict:
@@ -32,7 +45,7 @@ class ElasticTermQuery(ElasticSearchQuery):
     query_type: str = "term"
 
     def __init__(self, field: str, value: str):
-        self.field = field
+        super().__init__(field)
         self.value = value
 
     def get_query(self) -> dict:
@@ -47,9 +60,6 @@ class ElasticExistsQuery(ElasticSearchQuery):
     field: str
     query_type: str = "exists"
 
-    def __init__(self, field: str):
-        self.field = field
-
     def get_query(self) -> dict:
         return {"exists": {"field": self.field}}
 
@@ -61,7 +71,7 @@ class ElasticFullMatchQuery(ElasticSearchQuery):
     query_type: str = "match_phrase"
 
     def __init__(self, field: str, value: str, boosting: Optional[int] = None):
-        self.field = field
+        super().__init__(field)
         self.value = value
         self.boosting = boosting
 
@@ -83,7 +93,7 @@ class ElasticRangeQuery(ElasticSearchQuery):
     query_type: str = "range"
 
     def __init__(self, field: str, value_from: int, value_to: int):
-        self.field = field
+        super().__init__(field)
         self.value_from = min(value_from, value_to)
         self.value_to = max(value_from, value_to)
 
@@ -98,7 +108,7 @@ class ElasticGeoPointRangeQuery(ElasticSearchQuery):
     query_type: str = "geo_point_range"
 
     def __init__(self, field: str, value_from: str, value_to: str):
-        self.field = field
+        super().__init__(field)
         self.value_from = value_from
         self.value_to = value_to
 
@@ -120,14 +130,8 @@ class ElasticGeoPointRangeQuery(ElasticSearchQuery):
         }
 
 
-class ElasticGeoPointQuery(ElasticSearchQuery):
-    field: str
-    value: str
+class ElasticGeoPointQuery(ElasticTermQuery):
     query_type: str = "geo_point"
-
-    def __init__(self, field: str, value: str):
-        self.field = field
-        self.value = value
 
     def get_query(self):
         return ElasticGeoPointRangeQuery(field=self.field, value_from=self.value, value_to=self.value).get_query()
@@ -141,6 +145,7 @@ class ElasticNestedQuery(ElasticSearchQuery):
     def __init__(self, query: ElasticBaseQuery, nested_path: Optional[str] = None):
         self.query = query
         self.nested_path = nested_path
+        super().__init__(None)
 
     def _path(self):
         if self.nested_path:
