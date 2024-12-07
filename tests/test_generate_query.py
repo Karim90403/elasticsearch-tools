@@ -1,5 +1,6 @@
-from elasticsearch_tools import query as q
 import pytest
+
+from elasticsearch_tools import query as q
 
 
 @pytest.mark.parametrize(
