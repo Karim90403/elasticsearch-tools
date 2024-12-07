@@ -3,7 +3,7 @@ from typing import Optional
 
 from elasticsearch import Elasticsearch
 
-from .base.abc_session_manager import BaseSessionManager
+from elasticsearch_tools.connection.base.abc_session_manager import BaseSessionManager
 
 
 class ElasticSessionManager(BaseSessionManager):

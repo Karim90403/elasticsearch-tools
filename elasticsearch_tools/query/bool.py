@@ -9,8 +9,9 @@ class ElasticBoolQuery(ElasticBaseQuery):
     queries: List[ElasticBaseQuery]
     query_type = "bool_base"
 
-    def __init__(self, queries: List[ElasticBaseQuery]):
+    def __init__(self, queries: List[ElasticBaseQuery], *args, **kwargs):
         self.queries = queries or []
+        super().__init__(*args, **kwargs)
 
     def __and__(self, other: ElasticBaseQuery):
         if isinstance(other, ElasticBoolMust):

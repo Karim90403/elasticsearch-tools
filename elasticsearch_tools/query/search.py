@@ -10,12 +10,13 @@ class ElasticSearchQuery(ElasticBaseQuery):
     field: Optional[str]
     validate_fields: bool = True
 
-    def __init__(self, field: Optional[str] = None):
+    def __init__(self, field: Optional[str] = None, *args, **kwargs):
         if field and self.validate_fields and os.getenv("FIELD_VALIDATOR"):
             pattern = re.compile(r"^[0-9A-Za-z._]+$")
             if not re.fullmatch(pattern, field):
                 raise ValueError("Invalid value for field")
         self.field = field
+        super().__init__(*args, **kwargs)
 
     def __and__(self, other: ElasticBaseQuery):
         return ElasticBoolMust(queries=[self, other])
@@ -50,7 +51,7 @@ class ElasticTermQuery(ElasticSearchQuery):
         return {self.query_type: {self.field: self.value.strip('"')}}
 
 
-class ElasticFuzzyQuery(ElasticTermQuery):
+class ElasticFuzzyQuery(ElasticTermQuery, ElasticSearchQuery):
     query_type: str = "fuzzy"
 
 
@@ -80,7 +81,7 @@ class ElasticFullMatchQuery(ElasticSearchQuery):
         return {self.query_type: subquery}
 
 
-class ElasticMatchQuery(ElasticFullMatchQuery):
+class ElasticMatchQuery(ElasticFullMatchQuery, ElasticSearchQuery):
     query_type: str = "match"
 
 
@@ -128,7 +129,7 @@ class ElasticGeoPointRangeQuery(ElasticSearchQuery):
         }
 
 
-class ElasticGeoPointQuery(ElasticTermQuery):
+class ElasticGeoPointQuery(ElasticTermQuery, ElasticSearchQuery):
     query_type: str = "geo_point"
 
     def get_query(self):

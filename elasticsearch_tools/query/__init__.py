@@ -16,19 +16,20 @@ from .search import (
     ElasticTermQuery,
 )
 
-bool_queries = dict()
+queries = dict()
 
 for bool_query in ElasticBoolQuery.__subclasses__():
-    bool_queries[bool_query.query_type] = bool_query
-
-search_queries = dict()
+    queries[bool_query.query_type] = bool_query
 
 for search_query in ElasticSearchQuery.__subclasses__():
-    search_queries[search_query.query_type] = search_query
+    queries[search_query.query_type] = search_query
 
 
 def generate_query(_type: Optional[str], *args, **kwargs):
     if _type:
-        query_class = bool_queries.get(_type) or search_queries.get(_type) or ElasticBaseQuery
+        print(_type)
+        print(queries)
+        print(queries.get(_type))
+        query_class = queries.get(_type)
         return query_class(*args, **kwargs)
     return dict(**kwargs)
