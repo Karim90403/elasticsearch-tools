@@ -50,15 +50,6 @@
 | ElasticGeoPointQuery      | geo_point               | no       |
 | ElasticNestedQuery        | nested                  | yes      |
 
-
-
-
-
-* ElasticRangeQuery - "range"
-* ElasticGeoPointRangeQuery - "geo_point_range"
-* ElasticGeoPointQuery - "geo_point" - not official query
-* ElasticNestedQuery - "nested"
-
 ## Official documentation
 
 Documentation for the client is [available on elastic.co] and [Read the Docs].
