@@ -1,8 +1,9 @@
+from functools import lru_cache
 from typing import Optional
 
-from .sync_session_manager import elastic_db_manager
 from elasticsearch import Elasticsearch
-from functools import lru_cache
+
+from .sync_session_manager import elastic_db_manager
 
 
 @lru_cache(typed=True, maxsize=None)

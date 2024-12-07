@@ -1,5 +1,5 @@
-from elasticsearch_tools.query import ElasticBoolMust, ElasticBoolMustNot, ElasticBoolShould, ElasticFuzzyQuery
 import pytest
+from elasticsearch_tools.query import ElasticBoolMust, ElasticBoolMustNot, ElasticBoolShould, ElasticFuzzyQuery
 
 
 @pytest.mark.parametrize(

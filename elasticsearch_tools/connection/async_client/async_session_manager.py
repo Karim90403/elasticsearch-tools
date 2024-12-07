@@ -1,9 +1,8 @@
 import contextlib
 from typing import Optional
 
-from elasticsearch import AsyncElasticsearch
-
 from connection.base.abc_session_manager import BaseSessionManager
+from elasticsearch import AsyncElasticsearch
 
 
 class ElasticAsyncSessionManager(BaseSessionManager):

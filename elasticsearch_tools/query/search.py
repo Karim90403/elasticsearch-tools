@@ -17,8 +17,6 @@ class ElasticSearchQuery(ElasticBaseQuery):
                 raise ValueError("Invalid value for field")
         self.field = field
 
-
-
     def __and__(self, other: ElasticBaseQuery):
         return ElasticBoolMust(queries=[self, other])
 

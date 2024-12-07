@@ -1,8 +1,9 @@
 import contextlib
 from typing import Optional
 
-from .base.abc_session_manager import BaseSessionManager
 from elasticsearch import Elasticsearch
+
+from .base.abc_session_manager import BaseSessionManager
 
 
 class ElasticSessionManager(BaseSessionManager):

@@ -1,5 +1,4 @@
 import pytest
-
 from elasticsearch_tools import query as q
 
 

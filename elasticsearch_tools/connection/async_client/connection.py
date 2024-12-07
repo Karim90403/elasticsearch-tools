@@ -1,7 +1,7 @@
+from functools import lru_cache
 from typing import Optional
 
 from elasticsearch import AsyncElasticsearch
-from functools import lru_cache
 
 from .async_session_manager import elastic_async_db_manager
 
