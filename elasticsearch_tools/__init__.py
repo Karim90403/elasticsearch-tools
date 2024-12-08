@@ -23,3 +23,5 @@ from elasticsearch_tools.query.search import (
     ElasticSearchQuery,
     ElasticTermQuery,
 )
+
+from elasticsearch_tools.query import generate_query
