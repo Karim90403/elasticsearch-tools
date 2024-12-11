@@ -27,9 +27,6 @@ for search_query in ElasticSearchQuery.__subclasses__():
 
 def generate_query(_type: Optional[str], *args, **kwargs):
     if _type:
-        print(_type)
-        print(queries)
-        print(queries.get(_type))
         query_class = queries.get(_type)
         return query_class(*args, **kwargs)
     return dict(**kwargs)

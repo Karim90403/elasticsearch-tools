@@ -10,7 +10,7 @@ from setuptools import setup
 :copyright: (c) 2021 Peopl3s
 """
 
-version = '1.0.0'
+version = '1.0.1'
 
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
@@ -29,7 +29,7 @@ setup(
     long_description_content_type='text/markdown',
 
     url='https://github.com/Karim90403/elasticsearch-tools/',
-    download_url='https://github.com/Karim90403/elasticsearch-tools/main.zip',
+    download_url='https://github.com/Karim90403/elasticsearch-tools/archive/refs/heads/main.zip',
 
     license='Apache License, Version 2.0, see LICENSE file',
 
