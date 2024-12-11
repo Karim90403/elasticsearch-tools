@@ -5,9 +5,9 @@ from io import open
 from setuptools import setup
 
 """
-:authors: Peopl3s
+:authors: Karim Muzafarov
 :license: Apache License, Version 2.0, see LICENSE file
-:copyright: (c) 2021 Peopl3s
+:copyright: (c) 2021 Karim Muzafarov
 """
 
 version = '1.0.1'
