@@ -25,3 +25,4 @@ from elasticsearch_tools.query.search import (
 )
 
 from elasticsearch_tools.query import generate_query
+from .connection import *
