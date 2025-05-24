@@ -35,7 +35,9 @@ class ElasticQueryString(ElasticSearchQuery):
         self.value = value
 
     def get_query(self) -> dict:
-        return {"query_string": {"default_field": self.field or "*", "query": self.value or "*"}}
+        if self.field:
+            return {"query_string": {"default_field": self.field, "query": self.value or "*"}}
+        return {"query_string": {"query": self.value or "*"}}
 
 
 class ElasticTermQuery(ElasticSearchQuery):

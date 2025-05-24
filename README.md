@@ -60,3 +60,18 @@ Documentation for the client is [available on elastic.co] and [Read the Docs].
 ## License
 
 This software is licensed under the [Apache License 2.0](./LICENSE). See [NOTICE](./NOTICE).
+
+## Deploy
+
+Update dist
+
+```shell
+python3.9 setup.py sdist
+```
+
+Upload dist
+
+```shell
+twine upload dist/*
+```
+

@@ -2,14 +2,13 @@ import pytest
 
 from elasticsearch_tools import query as q
 
-
 @pytest.mark.parametrize(
     "auto_query, query",
     [
         (q.ElasticQueryString(field="f", value="v"), {"query_string": {"default_field": "f", "query": "v"}}),
         (q.ElasticQueryString(field="f"), {"query_string": {"default_field": "f", "query": "*"}}),
-        (q.ElasticQueryString(value="v"), {"query_string": {"default_field": "*", "query": "v"}}),
-        (q.ElasticQueryString(), {"query_string": {"default_field": "*", "query": "*"}}),
+        (q.ElasticQueryString(value="v"), {"query_string": {"query": "v"}}),
+        (q.ElasticQueryString(), {"query_string": {"query": "*"}}),
         (q.ElasticTermQuery(field="f", value="v"), {"term": {"f": "v"}}),
         (q.ElasticTermQuery(field="f", value='"v"'), {"term": {"f": "v"}}),
         (q.ElasticFuzzyQuery(field="f", value="v"), {"fuzzy": {"f": "v"}}),
