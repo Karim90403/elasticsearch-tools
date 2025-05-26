@@ -2,7 +2,7 @@
 
 from io import open
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 """
 :authors: Karim Muzafarov
@@ -10,7 +10,7 @@ from setuptools import setup
 :copyright: (c) 2021 Karim Muzafarov
 """
 
-version = '1.0.5'
+version = '1.0.6'
 
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
@@ -33,7 +33,7 @@ setup(
 
     license='Apache License, Version 2.0, see LICENSE file',
 
-    packages=['elasticsearch_tools'],
+    packages=find_packages(),
     install_requires=['elasticsearch'],
 
     classifiers=[
